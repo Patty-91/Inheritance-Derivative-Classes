@@ -1,0 +1,58 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Base {
+
+public:
+
+int balance;
+
+virtual void sayHello() {
+cout << "Hello, I'm a Base class" << endl;
+}
+
+};
+
+class Derived: public Base {
+
+public:
+
+void sayHello() {
+cout << "Hello, I'm a Derived class" << endl;
+}
+
+};
+
+// This function is doing static binding - It determine what class method will execute in this function during compile time
+void CheckClass(Base &obj) {
+cout << "Let's see what kind of class says hello"<<endl;
+
+obj.sayHello();
+
+}
+int main() {
+
+
+Base *d = new Derived();
+
+Base *b = new Base();
+
+d->sayHello();
+b->sayHello();
+
+CheckClass(*b);
+
+CheckClass(*d);
+
+//The problem here is the Static Binding
+// It will decide what class method to call in compile time
+// Without Polymorphism we will only use Base Methods since Derived is also a Base
+
+
+system("pause");
+return 0;
+}
