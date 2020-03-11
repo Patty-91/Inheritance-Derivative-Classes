@@ -1,0 +1,94 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+// This is my Base class or Parent class
+class Account {
+protected:
+double balance;
+
+public:
+
+//THIS IS THE BASE CLASS METHOD
+void deposit(double amount) {
+cout << "You have deposited " << amount << endl;
+this->balance += amount;
+}
+
+void withdraw(double amount) {
+cout << "You have withdraw " << amount << endl;
+balance -= amount;
+}
+
+//CONSTRUCTORS
+Account(double b) : balance{ b } { }
+Account() : Account(0) { cout << "Account Constructor called\n"; }
+~Account() { cout << "destructor called"; }
+
+
+//MY OVERLOADED OPERATOR
+friend ostream& operator<<(ostream& cout, Account& A);
+};
+
+
+// This is my Devivated or Child class
+class SavingsAccount : public Account { // we read: Savings "is-A" Account - This is an inheritance
+protected:
+//double balance; // this is inherited from Account
+double interest;
+public:
+
+
+// THIS IS AN OVERRIDED METHOD - I USE THE BASE METHOD BUT APPLY ONE MORE LAYER TO IT
+void deposit(double amount) {
+
+interest += amount * 0.10;
+
+amount += interest;
+
+Account::deposit(amount); // I'm calling the base method
+}
+
+void withdraw(double amount) {
+cout << "You have withdraw from your Savigns Account the amount of:" << amount << endl;
+}
+
+
+SavingsAccount(double i) : interest{ i } { }
+SavingsAccount() : SavingsAccount(0) { }
+~SavingsAccount() { }
+friend ostream& operator <<(ostream& cout, SavingsAccount& S);
+};
+
+//overloading my << operator
+ostream& operator<<(ostream& cout, Account& A) {
+cout << "Account balance is " << A.balance << endl;
+
+return cout;
+}
+
+//overloading my << operator
+ostream& operator <<(ostream& cout, SavingsAccount& S) {
+
+cout << "Savings balance is " << S.balance << endl;
+cout << "Savings interest rate is " << S.interest << endl;
+
+return cout;
+}
+
+int main()
+{
+
+SavingsAccount *svg = new SavingsAccount();
+
+
+svg->deposit(100);
+
+cout << *svg << endl;
+
+system("pause");
+return 0;
+
+}
