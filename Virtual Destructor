@@ -1,0 +1,62 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Base {
+
+public:
+
+int balance;
+
+virtual void sayHello() {
+cout << "Hello, I'm a Base class" << endl;
+}
+
+virtual ~Base() {}; // If you have virtual methods, you need virtual destructor
+//This will make sure to delete the correct object
+};
+
+class Derived: public Base {
+
+public:
+
+virtual void sayHello() {
+cout << "Hello, I'm a Derived class" << endl;
+
+
+}
+
+virtual ~Derived() {};
+
+};
+
+// This function is doing static binding - It determine what class method will execute in this function during compile time
+void CheckClass(Base &obj) {
+cout << "Let's see what kind of class says hello"<<endl;
+
+obj.sayHello();
+
+}
+int main() {
+
+
+Base *d = new Derived();
+
+Base *b = new Base();
+
+d->sayHello();
+b->sayHello();
+
+CheckClass(*b);
+
+CheckClass(*d);
+
+
+
+
+system("pause");
+return 0;
+}
