@@ -1,0 +1,65 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Shape { // This is an Abstract class, we cannot create a "shape obj"
+
+public:
+
+virtual void area() = 0; //if you insert "= 0" to a function that means that is a pure virtual function and this class is Abstract
+
+
+
+};
+
+class triangle: public Shape {
+private:
+
+
+public:
+virtual void area() override {
+
+
+
+cout << "Triangle area is composed by: Height * Base" << endl;
+
+}
+
+
+};
+
+
+class rectangle : public Shape {
+
+
+virtual void area() override {
+
+cout << "Rectangle area is composed by: width * lenght" << endl;
+
+
+}
+
+
+};
+
+
+int main() {
+
+Shape * t = new triangle;
+Shape * r = new rectangle;
+
+t->area();
+
+r->area();
+
+//Shape s = new Shape; //ERROR - you cannot create Abstract Obj
+
+
+
+
+system("pause");
+return 0;
+}
