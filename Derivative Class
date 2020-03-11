@@ -1,0 +1,90 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+// This is my Base class or Parent class
+class Account {
+private:
+double balance;
+
+public:
+void deposit(double amount) {
+cout << "You have deposited " << amount << endl;
+balance += amount;
+}
+
+void withdraw(double amount) {
+cout << "You have withdraw " << amount << endl;
+balance -= amount;
+}
+
+
+Account(double b) : balance{ b } { }
+Account() : Account(0) { cout << "Account Constructor called\n"; }
+~Account() { cout << "destructor called"; }
+
+friend ostream& operator<<(ostream& cout, Account& A);
+};
+
+
+// This is my Devivated or Child class
+class SavingsAccount : public Account { // we read: Savings "is-A" Account - This is an inheritance
+private:
+double balance;
+double interest;
+public:
+void deposit(double amount) {
+cout << "You have deposited on your Savigns Account the amount of: " << amount << endl;
+}
+
+void withdraw(double amount) {
+cout << "You have withdraw from your Savigns Account the amount of:" << amount << endl;
+}
+
+
+SavingsAccount(double b, double i) : balance{ b }, interest{i} { }
+SavingsAccount() : SavingsAccount(0,0) { }
+~SavingsAccount() { }
+friend ostream& operator <<(ostream& cout, SavingsAccount& S);
+};
+
+//overloading my << operator
+ostream& operator<<(ostream& cout, Account& A) {
+cout << "Account balance is "<< A.balance << endl;
+
+return cout;
+}
+
+//overloading my << operator
+ostream& operator <<(ostream& cout, SavingsAccount& S) {
+
+cout << "Savings balance is "<< S.balance << endl;
+cout << "Savings interest rate is " << S.interest << endl;
+
+return cout;
+}
+
+int main()
+{
+
+//Account *acc = new Account;
+SavingsAccount *svg = new SavingsAccount();
+
+//using the Account methods
+//acc->deposit(150.00);
+//acc->withdraw(70.00);
+
+//using the Savings methods
+svg->deposit(250.10);
+svg->withdraw(50.10);
+
+//Printing the objs
+//cout << *acc << endl;
+cout << *svg << endl;
+
+system("pause");
+return 0;
+
+}
