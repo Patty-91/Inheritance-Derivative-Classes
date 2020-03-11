@@ -1,0 +1,96 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Interface_Printable { // This is an interface to print objects
+
+friend ostream& operator <<(ostream& cout, Interface_Printable& obj);
+public:
+virtual void print(ostream& os) = 0;
+};
+
+
+// overloading the output with the interface function
+ostream& operator <<(ostream& cout, Interface_Printable& obj) {
+
+
+obj.print(cout);
+return cout;
+}
+
+
+class Shape: public Interface_Printable { // This is an Abstract class, we cannot create a "shape obj"
+
+public:
+
+virtual void area() = 0; //if you inser "= 0" to a function that means that is a pure virtual function and this class is Abstract
+
+virtual void print(ostream& os) {
+
+os << "Display: " << endl;
+this->area();
+}
+
+
+
+};
+
+class triangle: public Shape {
+private:
+
+
+public:
+virtual void area() override {
+
+
+
+cout << "Triangle area is composed by: Height * Base" << endl;
+
+}
+
+virtual void print(ostream& os) {
+
+os << "Display: " << endl;
+this->area();
+
+}
+
+
+};
+
+
+class rectangle : public Shape {
+
+
+virtual void area() override {
+
+cout << "Rectangle area is composed by: width * lenght" << endl;
+
+
+}
+
+
+};
+
+
+
+
+
+int main() {
+
+Shape * t = new triangle;
+Shape * r = new rectangle;
+
+cout << *t << endl;
+cout << *r << endl;
+//Shape s = new Shape; //ERROR - you cannot create Abstract Obj
+
+
+
+
+system("pause");
+return 0;
+}
